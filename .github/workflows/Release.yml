@@ -17,6 +17,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           allow-initial-development-versions: true
-        run: make docker-build
+      - run: make docker-build
       - run: make docker-push VERISON=${{steps.semrel.outputs.version}}
         if: steps.semrel.outputs.version != ''
