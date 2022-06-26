@@ -2,6 +2,8 @@
 FROM golang:1.18 as builder
 
 LABEL org.opencontainers.image.source=https://github.com/hef/cac-operator
+LABEL org.opencontainers.image.description = "The CAC Operator"
+
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
