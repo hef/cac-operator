@@ -1,0 +1,77 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.9.0
+  creationTimestamp: null
+  name: servers.incubation.hef.github.io
+spec:
+  group: incubation.hef.github.io
+  names:
+    kind: Server
+    listKind: ServerList
+    plural: servers
+    singular: server
+  scope: Namespaced
+  versions:
+  - name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Server is the Schema for the servers API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ServerSpec defines the desired state of Server
+            properties:
+              cpu:
+                description: Foo is an example field of Server. Edit server_types.go
+                  to remove/update
+                type: integer
+              encryption:
+                type: boolean
+              ha:
+                type: boolean
+              os:
+                type: string
+              ram:
+                type: integer
+              storage:
+                type: integer
+            type: object
+          status:
+            description: ServerStatus defines the observed state of Server
+            properties:
+              id:
+                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                  of cluster Important: Run "make" to regenerate code after modifying
+                  this file'
+                type: string
+              ip:
+                description: "An IP is a single IP address, a slice of bytes. Functions
+                  in this package accept either 4-byte (IPv4) or 16-byte (IPv6) slices
+                  as input. \n Note that in this documentation, referring to an IP
+                  address as an IPv4 address or an IPv6 address is a semantic property
+                  of the address, not just the length of the byte slice: a 16-byte
+                  slice can still be an IPv4 address."
+                format: byte
+                type: string
+              name:
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,6 @@
+apiVersion: incubation.hef.github.io/v1beta1
+kind: Server
+metadata:
+  name: server-sample
+spec:
+  # TODO(user): Add fields here

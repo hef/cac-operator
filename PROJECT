@@ -1,0 +1,19 @@
+domain: hef.github.io
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: cac-operator
+repo: github.com/hef/cac-operator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: hef.github.io
+  group: incubation
+  kind: Server
+  path: github.com/hef/cac-operator/api/v1beta1
+  version: v1beta1
+version: "3"
