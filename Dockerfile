@@ -1,7 +1,7 @@
 # Build the manager binary
-LABEL org.opencontainers.image.source https://github.com/OWNER/REPO
-
 FROM golang:1.18 as builder
+
+LABEL org.opencontainers.image.source https://github.com/OWNER/REPO
 
 WORKDIR /workspace
 # Copy the Go Modules manifests
