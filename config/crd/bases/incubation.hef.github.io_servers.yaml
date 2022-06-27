@@ -36,18 +36,25 @@ spec:
             description: ServerSpec defines the desired state of Server
             properties:
               cpu:
-                description: Foo is an example field of Server. Edit server_types.go
-                  to remove/update
+                description: Number of CPUs [1 - 10]
                 type: integer
               encryption:
+                description: Enable Encryption [true|false]
                 type: boolean
               ha:
+                description: Enable High Availability [true|false]
                 type: boolean
               os:
+                description: Operating System ["CentOS 7.9 64bit", "CentOS 8.3 64bit",
+                  "Debian 9.13 64Bit", "FreeBSD 12.2 64bit", "Ubuntu 18.04 LTS 64bit"]
                 type: string
               ram:
+                description: Ram in MB, valid values are [512, 1024, 1536, 2048, 2560,
+                  3072, 4096, 5120, 6144, 7168, 8192]
                 type: integer
               storage:
+                description: Storage to allocate, in GB, valid values are multiples
+                  of 10
                 type: integer
             type: object
           status:
@@ -57,15 +64,9 @@ spec:
                 description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
                   of cluster Important: Run "make" to regenerate code after modifying
                   this file'
-                type: string
+                format: int64
+                type: integer
               ip:
-                description: "An IP is a single IP address, a slice of bytes. Functions
-                  in this package accept either 4-byte (IPv4) or 16-byte (IPv6) slices
-                  as input. \n Note that in this documentation, referring to an IP
-                  address as an IPv4 address or an IPv6 address is a semantic property
-                  of the address, not just the length of the byte slice: a 16-byte
-                  slice can still be an IPv4 address."
-                format: byte
                 type: string
               name:
                 type: string

@@ -18,7 +18,9 @@ package controllers
 
 import (
 	"context"
+	"k8s.io/utils/env"
 
+	cacctl "github.com/hef/cacctl/client"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -47,9 +49,46 @@ type ServerReconciler struct {
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.12.1/pkg/reconcile
 func (r *ServerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+	logger := log.FromContext(ctx)
 
-	// TODO(user): your logic here
+	x := incubationv1beta1.Server{}
+	err := r.Get(ctx, req.NamespacedName, &x)
+	if err != nil {
+		logger.Error(err, "unable to fetch Server")
+		return ctrl.Result{}, err
+	}
+
+	username := env.GetString("CAC_USERNAME", "")
+	password := env.GetString("CAC_PASSWORD", "")
+
+	client, err := cacctl.New(
+		cacctl.WithUsernameAndPassword(username, password),
+		cacctl.WithUserAgent("cac-operator/dev"),
+	)
+	if err != nil {
+		logger.Error(err, "error creating client")
+		return ctrl.Result{}, err
+	}
+
+	servers, err := client.ListWithFilter(ctx, req.Name, 200, cacctl.All)
+	if err != nil {
+		logger.Error(err, "error listing servers")
+		return ctrl.Result{}, err
+	}
+
+	for _, server := range servers.Servers {
+		if server.ServerName == req.Name {
+			x.Status.Ip = server.IpAddress.String()
+			x.Status.Id = server.ServerId
+			x.Name = server.ServerName
+		}
+	}
+
+	err = r.Status().Update(ctx, &x)
+	if err != nil {
+		logger.Error(err, "error updating server status")
+		return ctrl.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
 }

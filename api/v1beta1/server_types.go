@@ -18,7 +18,6 @@ package v1beta1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"net"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -29,22 +28,27 @@ type ServerSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of Server. Edit server_types.go to remove/update
-	Cpu        int    `json:"cpu,omitempty"`
-	Encryption bool   `json:"encryption,omitempty"`
-	Ha         bool   `json:"ha,omitempty"`
-	Os         string `json:"os,omitempty"`
-	Ram        int    `json:"ram,omitempty"`
-	Storage    int    `json:"storage,omitempty"`
+	// Number of CPUs [1 - 10]
+	Cpu int `json:"cpu,omitempty"`
+	// Enable Encryption [true|false]
+	Encryption bool `json:"encryption,omitempty"`
+	// Enable High Availability [true|false]
+	Ha bool `json:"ha,omitempty"`
+	// Operating System ["CentOS 7.9 64bit", "CentOS 8.3 64bit", "Debian 9.13 64Bit", "FreeBSD 12.2 64bit", "Ubuntu 18.04 LTS 64bit"]
+	Os string `json:"os,omitempty"`
+	//Ram in MB, valid values are [512, 1024, 1536, 2048, 2560, 3072, 4096, 5120, 6144, 7168, 8192]
+	Ram int `json:"ram,omitempty"`
+	// Storage to allocate, in GB, valid values are multiples of 10
+	Storage int `json:"storage,omitempty"`
 }
 
 // ServerStatus defines the observed state of Server
 type ServerStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
-	Id   string `json:"id,omitempty"`
+	Id   int64  `json:"id,omitempty"`
 	Name string `json:"name,omitempty"`
-	Ip   net.IP `json:"ip,omitempty"`
+	Ip   string `json:"ip,omitempty"`
 }
 
 //+kubebuilder:object:root=true
