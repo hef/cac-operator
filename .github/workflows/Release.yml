@@ -18,8 +18,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           allow-initial-development-versions: true
 
-      - run: make docker-build
-        if: steps.semrel.outputs.version == ''
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Login to GitHub Container Registry
         if: steps.semrel.outputs.version != ''
