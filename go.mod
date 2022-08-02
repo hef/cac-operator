@@ -1,6 +1,6 @@
 module github.com/hef/cac-operator
 
-go 1.18
+go 1.19
 
 require (
 	github.com/hef/cacctl v0.16.0
