@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM golang:1.18 as builder
+FROM golang:1.23 as builder
 
 LABEL org.opencontainers.image.source=https://github.com/hef/cac-operator
 LABEL org.opencontainers.image.description = "The CAC Operator"
